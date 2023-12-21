@@ -21,4 +21,3 @@ export const parseQuery = (ref: string) : BibleQuery => {
         stopIndex: stopIndex || null
     };
 }
-module.exports = { parseQuery };

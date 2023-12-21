@@ -1,0 +1,33 @@
+{
+  "name": "bible-ref-parser",
+  "version": "0.0.1",
+  "description": "The most universal module to parse bible reference to an object with the information of the given reference.",
+  "main": "/dist/index.js",
+  "types": "/dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "keywords": [
+    "bible",
+    "canon",
+    "book",
+    "reference",
+    "parser",
+    "verses",
+    "chapter"
+  ],
+  "author": "ryanhmd",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryan-hmd/bible-ref-parser"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "bible-abbreviation": "^0.0.2"
+  }
+}

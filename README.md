@@ -7,7 +7,6 @@ The most universal module to parse bible reference to an object with the informa
 ## Table of Contents
 * [Installation](#installation)
 * [Usage](#usage)
-    * [Possible exceptions](#possible-exceptions)
 * [Notes](#Notes)
 * [Contribute](#contribute)
 * [Todos](#todos)
@@ -31,7 +30,37 @@ const reference = "Matthew 28:18-20";
 try {
     const parsedRef = parseQuery(reference);
     console.log(parsedRef);
-    // output : {book: "MT", chapter: "28", startIndex: "18", stopIndex: "20"}
+    // output : { book: "MT", chapter: "28", type: "RANGE", verses: ["18", "20"] }
+}
+catch (e) {
+    console.log(`Error ${e.code} as been raised : ${e.message}`)
+}
+```
+
+If anything ok the returned object will **always contain** `book`, `chapter` and `type` keys. Dependently on the `type` value, the object may contain or not the following last key : `verses`, that contain the verses to fetch. Below the possible `type` :
+
+|        Type       |                 Request prototype                 | is `verses` ? |
+|:-----------------:|:-------------------------------------------------:|:-------------:|
+|  `WHOLE_CHAPTER`  | `<book> <chapter>`                                |      `No`     |
+|      `RANGE`      | `<book> <chapter>:<verseStart>-<verseEnd>`        |      `Yes`    |
+|       `MAP`       | `<book> <chapter>:<verse>`                        |      `Yes`    |
+|       `MAP`       | `<book> <chapter>:<verse1>,<verse2>,...,<verseN>` |      `Yes`    |
+
+Then the treatment of the reference you've parsed should be conditionned to the value of `type`. Here some examples :
+
+```js
+try {
+    const parsedRef = parseQuery("Matthew 28:18-20");
+    if (parsedRef.type === "RANGE") {
+        const [startIndex, stopIndex] = parsedRef.verses
+        // you logic for a range
+    }
+    else if (parsedRef.type === "MAP") {
+        for(const verse of parsedRef.verses) {
+            // your logic for a single verse or separated verses in a same chapter
+        }
+    }
+    // other cases ...
 }
 catch (e) {
     console.log(`Error ${e.code} as been raised : ${e.message}`)
@@ -41,8 +70,6 @@ catch (e) {
 ⚠️ **The function is likely to throw exceptions**.
 Remember to surround it with a `try ... catch` block to ensure your program runs correctly.
 
-<a name="possible-exceptions"></a>
-### 🚧 Possible exceptions
 All the exceptions are raised with the following structure:
 ```js
     { code: HTTP_ERROR_CODE, message: STRING_TO_DISPLAY }
@@ -58,6 +85,7 @@ The function supports the following formats:
 - `<book> <chapter>`
 - `<book> <chapter>:<verse>`
 - `<book> <chapter>:<verseStart>-<verseEnd>`
+- `<book> <chapter>:<verse1>,<verse2>,...,<verseN>`
 
 [bible-ref-parser](https://www.npmjs.com/package/bible-ref-parser) uses the `bookTag` function of the [bible-abbreviation](https://www.npmjs.com/package/bible-abbreviation) module to support a large variety of abbreviations for references.
 
@@ -65,11 +93,8 @@ The function supports the following formats:
 ## 💻 Contribute
 **Want to improve the module?** submit a [pull-request](https://github.com/ryan-hmd/bible-ref-parser/pulls) on github or open an [issue](https://github.com/ryan-hmd/bible-ref-parser/issues).
 
-<a name="Todos"></a>
-## 📝 Todos
-Include the following format support:
-- [ ] `<book> <chapter>:<verse1>,<verse2>,...,<verseN>`
-
+<a name="license"></a>
 ## 📜 License
 Copyright © 2023 [RyanHmd](https://github.com/ryan-hmd)
+<br>
 This project is MIT licensed.

@@ -7,7 +7,7 @@ const { bookTag } = require('bible-abbreviation');
  * ```
 */
 export const parseQuery = (ref: string) : BibleQuery => {
-    const splitter = new RegExp(/((?:\d )?[A-Za-zÀ-ÿ]+) (\d+)(?::((?:\d+[a-zA-Z]?)(?:(?:-\d+[a-zA-Z]?)|(?:,\d+[a-zA-Z]?)+){0,1}))?/);
+    const splitter = new RegExp(/((?:\d ?)?[A-Za-zÀ-ÿ]+) (\d+)(?::((?:\d+[a-zA-Z]?)(?:(?:-\d+[a-zA-Z]?)|(?:,\d+[a-zA-Z]?)+){0,1}))?/);
     if (!splitter.test(ref)) throw {code: 400, message: 'No valid reference to match'};
     const [, book, chapter, indexs] = ref.match(splitter)!;
 

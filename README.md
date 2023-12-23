@@ -37,7 +37,7 @@ catch (e) {
 }
 ```
 
-If anything ok the returned object will **always contain** `book`, `chapter` and `type` keys. Dependently on the `type` value, the object may contain or not the following last key : `verses`, that contain the verses to fetch. Below the possible `type` :
+If all goes well, the returned object will **always** contain the keys `book`, `chapter` and `type`. Depending on the value of `type`, the object may or may not contain the following key: `verses`, which contains the verses to be retrieved. Below the possible `type` :
 
 |        Type       |                 Request prototype                 | is `verses` ? |
 |:-----------------:|:-------------------------------------------------:|:-------------:|
@@ -46,7 +46,7 @@ If anything ok the returned object will **always contain** `book`, `chapter` and
 |       `MAP`       | `<book> <chapter>:<verse>`                        |      `Yes`    |
 |       `MAP`       | `<book> <chapter>:<verse1>,<verse2>,...,<verseN>` |      `Yes`    |
 
-Then the treatment of the reference you've parsed should be conditionned to the value of `type`. Here some examples :
+Then, the processing of the reference you've parsed must be conditioned on the value of the `type`. Here are a few examples:
 
 ```js
 try {

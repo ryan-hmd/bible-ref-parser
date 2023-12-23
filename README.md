@@ -7,9 +7,9 @@ The most universal module to parse bible reference to an object with the informa
 ## Table of Contents
 * [Installation](#installation)
 * [Usage](#usage)
+* [Known issues](#issues)
 * [Notes](#Notes)
 * [Contribute](#contribute)
-* [Todos](#todos)
 * [License](#license)
 
 
@@ -53,7 +53,7 @@ try {
     const parsedRef = parseQuery("Matthew 28:18-20");
     if (parsedRef.type === "RANGE") {
         const [startIndex, stopIndex] = parsedRef.verses;
-        // you logic for a range
+        // your logic for a range
     }
     else if (parsedRef.type === "MAP") {
         for(const verse of parsedRef.verses) {
@@ -75,17 +75,30 @@ Remember to surround it with a `try ... catch` block to ensure your program runs
 All the exceptions are raised with the following structure:
 
 ```js
-    { code: HTTP_ERROR_CODE, message: STRING_TO_DISPLAY }
+{ code: HTTP_ERROR_CODE, message: STRING_TO_DISPLAY }
 ```
 
 - `No valid reference to match` : raised with code `400` when the function receive a string that doesn't contain a biblical reference.
 - `No book founded for the given reference`: raised with code `404` when the book of the reference sent is unknown to the canon.
 - `Invalid reference`: code `400` when the reference sent contains an range such as `A-A`, which is nonsense.
 
+<a name="issues"></a>
+## 🛑 Known issues
+
+The regex works great for isolated references (see next section), but can return unexpected values <u>**if the input is a whole text containing the references**</u>. Indeed, if you try "I want 2 John 5:7", you'll get two matches: 'want 2' and 'John 5:7' (or only the first one if the regex is set without the `g` flag) whereas the expected match is '2 John 5:7'.
+
+The best solution I can provide at the moment <u>**if your input is whole text**</u> is to ignore the *whole chapter* format using the following regex:
+
+```
+((?:\d ?)?[A-Za-zÀ-ÿ]+) (\d+):((?:\d+[a-zA-Z]?)(?:(?:-\d+[a-zA-Z]?)|(?:,\d+[a-zA-Z]?)+){0,1})
+```
+
+Keep in mind that **there is no problem if all of your inputs are standalone ref**, the issue only concern input that are plain text like paragraph etc.
+
 <a name="notes"></a>
 ## ❓ Notes
 
-The function supports the following formats:
+The function fully supports the following formats:
 - `<book> <chapter>`
 - `<book> <chapter>:<verse>`
 - `<book> <chapter>:<verseStart>-<verseEnd>`

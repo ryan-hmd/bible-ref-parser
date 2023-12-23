@@ -33,7 +33,7 @@ try {
     // output : { book: "MT", chapter: "28", type: "RANGE", verses: ["18", "20"] }
 }
 catch (e) {
-    console.log(`Error ${e.code} as been raised : ${e.message}`)
+    console.log(`Error ${e.code} as been raised : ${e.message}`);
 }
 ```
 
@@ -52,7 +52,7 @@ Then, the processing of the reference you've parsed must be conditioned on the v
 try {
     const parsedRef = parseQuery("Matthew 28:18-20");
     if (parsedRef.type === "RANGE") {
-        const [startIndex, stopIndex] = parsedRef.verses
+        const [startIndex, stopIndex] = parsedRef.verses;
         // you logic for a range
     }
     else if (parsedRef.type === "MAP") {
@@ -63,14 +63,17 @@ try {
     // other cases ...
 }
 catch (e) {
-    console.log(`Error ${e.code} as been raised : ${e.message}`)
+    console.log(`Error ${e.code} as been raised : ${e.message}`);
 }
 ```
+
+🤔 **Why return only the starting and ending verses?** Some versions of the Bible have non-linear indexing or verses with letter indexes. It is therefore not possible to generate an array containing the indexes between two given values. The most general way of managing references in ranges is to provide only the starting and ending verses. A well thought-out logic allows you to retrieve all the verses between.
 
 ⚠️ **The function is likely to throw exceptions**.
 Remember to surround it with a `try ... catch` block to ensure your program runs correctly.
 
 All the exceptions are raised with the following structure:
+
 ```js
     { code: HTTP_ERROR_CODE, message: STRING_TO_DISPLAY }
 ```
@@ -81,6 +84,7 @@ All the exceptions are raised with the following structure:
 
 <a name="notes"></a>
 ## ❓ Notes
+
 The function supports the following formats:
 - `<book> <chapter>`
 - `<book> <chapter>:<verse>`
@@ -91,10 +95,12 @@ The function supports the following formats:
 
 <a name="contribute"></a>
 ## 💻 Contribute
+
 **Want to improve the module?** submit a [pull-request](https://github.com/ryan-hmd/bible-ref-parser/pulls) on github or open an [issue](https://github.com/ryan-hmd/bible-ref-parser/issues).
 
 <a name="license"></a>
 ## 📜 License
+
 Copyright © 2023 [RyanHmd](https://github.com/ryan-hmd)
 <br>
 This project is MIT licensed.

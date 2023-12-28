@@ -3,7 +3,7 @@ const { bookTag } = require('bible-abbreviation');
  * Parse a biblical reference into a JSON object containing all the reference information.
  * ```js
  * parseQuery("Matthew 28:18-20");
- * // output : { book: "MT", chapter: "28", verses: ["18", "20"] }
+ * // output : { book: "MT", chapter: "28", type: "RANGE", verses: ["18", "20"] }
  * ```
 */
 export const parseQuery = (ref: string) : BibleQuery => {

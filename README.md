@@ -104,7 +104,7 @@ The function fully supports the following formats:
 - `<book> <chapter>:<verseStart>-<verseEnd>`
 - `<book> <chapter>:<verse1>,<verse2>,...,<verseN>`
 
-[bible-ref-parser](https://www.npmjs.com/package/bible-ref-parser) uses the `bookTag` function of the [bible-abbreviation](https://www.npmjs.com/package/bible-abbreviation) module to support a large variety of abbreviations for references.
+[bible-ref-parser](https://www.npmjs.com/package/bible-ref-parser) uses the `bookTag` function of the [bible-abbreviation](https://www.npmjs.com/package/bible-abbreviation/v/0.0.3)`@0.0.3` module to support a large variety of abbreviations for references.
 
 <a name="contribute"></a>
 ## 💻 Contribute

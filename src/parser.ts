@@ -12,13 +12,13 @@ export const parseQuery = (ref: string) : BibleQuery => {
     const [, book, chapter, indexs] = ref.match(splitter)!;
 
     const tag = bookTag(book);
-    if (!tag) throw {code: 404, message: "No book founded for the given reference"};
+    if (!tag) throw {code: 404, message: `No book founded for the following reference : ${book}`};
 
     if (!indexs) return { book: tag, chapter: chapter, type: "WHOLE_CHAPTER" };
     
     if (indexs.includes("-")) {
         const [startIndex, stopIndex] = indexs.split('-').map(x => x.toUpperCase());
-        if (startIndex === stopIndex) throw {code: 400, message: "Nonsense range"};
+        if (startIndex === stopIndex) throw {code: 400, message: "Nonsense range, start index is the same as stop index. Please request a MAP instead."};
         return {
             book: tag,
             chapter: chapter,

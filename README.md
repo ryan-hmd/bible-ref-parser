@@ -90,7 +90,7 @@ The regex works great for isolated references (see next section), but can return
 The best solution I can provide at the moment <u>**if your input is whole text**</u> is to ignore the *whole chapter* format using the following regex:
 
 ```
-((?:\d ?)?[A-Za-zÀ-ÿ]+) (\d+):((?:\d+[a-zA-Z]?)(?:(?:-\d+[a-zA-Z]?)|(?:,\d+[a-zA-Z]?)+){0,1})
+\b((?:\d ?)?[A-Za-zÀ-ÿ]+) (\d+):((?:\d+[a-zA-Z]?)(?:(?:-\d+[a-zA-Z]?)|(?:,\d+[a-zA-Z]?)+){0,1})\b
 ```
 
 Keep in mind that **there is no problem if all of your inputs are standalone ref**, the issue only concern input that are plain text like paragraph etc.

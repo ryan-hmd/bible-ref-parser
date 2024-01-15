@@ -1,11 +1,10 @@
 {
   "name": "bible-ref-parser",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "The most universal module to parse bible reference to an object with the information of the given reference.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
   },
   "keywords": [
@@ -15,7 +14,8 @@
     "reference",
     "parser",
     "verses",
-    "chapter"
+    "chapter",
+    "edition"
   ],
   "author": "ryanhmd",
   "license": "MIT",

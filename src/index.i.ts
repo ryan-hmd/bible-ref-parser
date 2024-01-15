@@ -3,4 +3,5 @@ interface BibleQuery {
     chapter: string;
     type: string;
     verses?: string[];
+    edition: string | undefined
 }

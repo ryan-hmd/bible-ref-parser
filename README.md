@@ -90,18 +90,18 @@ The module also extracts a desired edition of the Bible, if known to the parser.
 ```js
 try {
     const parsed1 = parseQuery("Luke 13:34 KJV");
-    console.log(parsed.edition); // output: "KJV"
+    console.log(parsed1.edition); // output: "KJV"
 
     const parsed2 = parseQuery("Matthew 28:18-20 Foo");
-    console.log(parsed.edition); // output: undefined
+    console.log(parsed2.edition); // output: undefined
 }
 catch (e) {
     console.log(`Error ${e.code} as been raised : ${e.message}`);
 }
 ```
 
-Si l'édition n'est pas connue, le parser renverra `undefined` ; vous pouvez alors redéfinir la valeur selon votre préférence. 
-Ci-dessous l'ensemble des éditions supportés :
+If the edition is not known, the parser will return `undefined`; you can then redefine the value according to your preference. 
+Below is a list of supported editions:
 
 |                Edition             |  Abbreviation  | Language |
 |:----------------------------------:|:--------------:|:--------:|

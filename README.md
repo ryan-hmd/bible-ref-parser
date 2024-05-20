@@ -25,17 +25,11 @@ npm install bible-ref-parser
 ## 📑 Usage
 
 ```js
-const { parseQuery } = require('bible-ref-parser');
+import { parse } from "bible-ref-parser";
 
-const reference = "Matthew 28:18-20";
-try {
-    const parsedRef = parseQuery(reference);
-    console.log(parsedRef);
-    // output : { book: "MT", chapter: "28", type: "RANGE", verses: ["18", "20"], edition: undefined }
-}
-catch (e) {
-    console.log(`Error ${e.code} as been raised : ${e.message}`);
-}
+const ref = parse("Matthew 28:18-20");
+console.log(ref);
+// output : { book: "MT", chapter: "28", type: "RANGE", verses: ["18", "20"], edition: undefined }
 ```
 
 If all goes well, the returned object will **always** contain the keys `version`, `book`, `chapter` and `type`. Depending on the value of `type`, the object may or may not contain the following key: `verses`, which contains the verses to be retrieved. Below the possible `type` :
@@ -50,54 +44,32 @@ If all goes well, the returned object will **always** contain the keys `version`
 Then, the processing of the reference you've parsed must be conditioned on the value of the `type`. Here are a few examples:
 
 ```js
-try {
-    const parsedRef = parseQuery("Matthew 28:18-20");
-    if (parsedRef.type === "RANGE") {
-        const [startIndex, stopIndex] = parsedRef.verses;
-        // your logic for a range
-    }
-    else if (parsedRef.type === "MAP") {
-        for(const verse of parsedRef.verses) {
-            // your logic for a single verse or separated verses in a same chapter
-        }
-    }
-    // other cases ...
+const ref = parse("Matthew 28:18-20");
+
+if (ref.type === "RANGE") {
+    const [startIndex, stopIndex] = ref.verses;
+    // your logic for a range
 }
-catch (e) {
-    console.log(`Error ${e.code} as been raised : ${e.message}`);
+else if (ref.type === "MAP") {
+    for(const verse of ref.verses) {
+        // your logic for a single verse or separated verses in a same chapter
+    }
 }
+// other cases ...
 ```
 
 🤔 **Why return only the starting and ending verses?** Some versions of the Bible have non-linear indexing or verses with letter indexes. It is therefore not possible to generate an array containing the indexes between two given values. The most general way of managing references in ranges is to provide only the starting and ending verses. A well thought-out logic allows you to retrieve all the verses between.
-
-⚠️ **The function is likely to throw exceptions**.
-Remember to surround it with a `try ... catch` block to ensure your program runs correctly.
-
-All the exceptions are raised with the following structure:
-
-```js
-{ code: HTTP_ERROR_CODE, message: STRING_TO_DISPLAY }
-```
-
-- `No valid reference to match` : raised with code `400` when the function receive a string that doesn't contain a biblical reference.
-- `No book founded for the given reference`: raised with code `404` when the book of the reference sent is unknown to the canon.
-- `Invalid reference`: code `400` when the reference sent contains an range such as `A-A`, which is nonsense.
 
 <a name="editions"></a>
 ## ✏️ Bible editions
 The module also extracts a desired edition of the Bible, if known to the parser.
 
 ```js
-try {
-    const parsed1 = parseQuery("Luke 13:34 KJV");
-    console.log(parsed1.edition); // output: "KJV"
+const ref1 = parse("Luke 13:34 KJV");
+console.log(ref1.edition); // output: "KJV"
 
-    const parsed2 = parseQuery("Matthew 28:18-20 Foo");
-    console.log(parsed2.edition); // output: undefined
-}
-catch (e) {
-    console.log(`Error ${e.code} as been raised : ${e.message}`);
-}
+const ref2 = parse("Matthew 28:18-20 Foo");
+console.log(ref2.edition); // output: undefined
 ```
 
 If the edition is not known, the parser will return `undefined`; you can then redefine the value according to your preference. 
@@ -142,6 +114,8 @@ The function fully supports the following formats:
 - `<book> <chapter>:<verse>`
 - `<book> <chapter>:<verseStart>-<verseEnd>`
 - `<book> <chapter>:<verse1>,<verse2>,...,<verseN>`
+
+Note that a **range** reference where the start index is equal to the end index such as `John 3:16-16` will be interpreted as a valid **map** reference; the previous one will be treated as `John 3:16`.
 
 [bible-ref-parser](https://www.npmjs.com/package/bible-ref-parser) uses the `bookTag` function of the [bible-abbreviation](https://www.npmjs.com/package/bible-abbreviation/v/0.0.3)`@0.0.3` module to support a large variety of abbreviations for references.
 

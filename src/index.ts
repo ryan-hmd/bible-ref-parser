@@ -1,3 +1,3 @@
 export {
-    parseQuery
+    parse
 } from './parser'

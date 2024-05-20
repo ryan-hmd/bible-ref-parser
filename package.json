@@ -1,6 +1,6 @@
 {
   "name": "bible-ref-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The most universal module to parse bible reference to an object with the information of the given reference.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
